@@ -36,10 +36,8 @@ searchForm.addEventListener('submit', onSearch);
 function onChangeCountryOrCategory(e) {
     // Show preloader
     ui.showLoader();
-
     // Reset resources select
     ui.resetSelect('#resources');
-
     // Enable category select
     ui.disabledSelect(false, '#categories');
 
@@ -47,23 +45,17 @@ function onChangeCountryOrCategory(e) {
     http.get(`https://newsapi.org/v2/top-headlines?country=${selectCountry.value}&category=${selectCategory.value}&apiKey=${apiKey}`, (err, resp) => {
         // Check error
         if (err) return ui.showError(err);
-        // Deserialize json object
-        const respone = JSON.parse(resp);
-        // Clear container
-        ui.clearContainer();
-        // Add news to markup
-        respone.articles.forEach(news => ui.addNews(news));
+        // News handle
+        newsHandler(err, resp);
     });
 }
 
 function onChangeResources(e) {
     // Show preloader
     ui.showLoader();
-
     // Reset country and categories selects
     ui.resetSelect('#country');
     ui.resetSelect('#categories');
-
     // Disable category select
     ui.disabledSelect(true, '#categories');
 
@@ -71,34 +63,43 @@ function onChangeResources(e) {
     http.get(`https://newsapi.org/v2/top-headlines?sources=${selectResources.value}&apiKey=${apiKey}`, (err, resp) => {
         // Check error
         if (err) return ui.showError(err);
-        // Deserialize json object
-        const respone = JSON.parse(resp);
-        // Clear container
-        ui.clearContainer();
-        // Add news to markup
-        respone.articles.forEach(news => ui.addNews(news));
+        // News handle
+        newsHandler(err, resp);
     });
 }
 
 function onSearch(e) {
     // Stop default action
     e.preventDefault();
+    // Reset country and categories selects
+    ui.resetSelect('#country');
+    ui.resetSelect('#categories');
+    // Disable category select
+    ui.disabledSelect(true, '#categories');
+    // Reset resources select
+    ui.resetSelect('#resources');
 
     // Make get request for search news
     http.get(`https://newsapi.org/v2/top-headlines?q=${searchForm.elements.searchInput.value}&apiKey=${apiKey}`, (err, resp) => {
         // Clear input
         searchForm.reset();
-        // Check error
-        if (err) return ui.showError(err);
-        // Deserialize json object
-        const respone = JSON.parse(resp);
-        if (respone.totalResults) {
-            // Clear container
-            ui.clearContainer();
-            // Add news to markup
-            respone.articles.forEach(news => ui.addNews(news));
-        } else {
-            ui.showInfo('По вашему запросу новостей не найдено.');
-        }
+        // News handle
+        newsHandler(err, resp);
     });
+}
+
+function newsHandler(err, resp) {
+    // Check error
+    if (err) return ui.showError(err);
+    // Deserialize json object
+    const respone = JSON.parse(resp);
+    // Check total results
+    if (respone.totalResults) {
+        // Clear container
+        ui.clearContainer();
+        // Add news to markup
+        respone.articles.forEach(news => ui.addNews(news));
+    } else {
+        ui.showInfo('По вашему запросу новостей не найдено.');
+    }
 }
