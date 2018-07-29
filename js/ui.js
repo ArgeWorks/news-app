@@ -1,6 +1,6 @@
 class UI {
     constructor() {
-        this.container = document.querySelector('.news-container .container .row');
+        this.container = document.querySelector('.news-container .container .row') || document.querySelector('.login-container .container .row') || document.querySelector('.register-container .container .row');
     }
 
     addNews(news) {

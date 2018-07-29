@@ -42,12 +42,12 @@ class Http {
     put(url, data) {
         return new Promise((resolve, reject) => {
             fetch(url, {
-                    method: "PUT",
-                    headers: {
-                        "Content-type": "application/json"
-                    },
-                    body: JSON.stringify(data)
-                })
+                method: "PUT",
+                headers: {
+                    "Content-type": "application/json"
+                },
+                body: JSON.stringify(data)
+            })
                 .then(resp => {
                     if (resp.status === 200 || resp.status === 201) {
                         resp.json()

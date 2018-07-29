@@ -2,6 +2,8 @@
 const http = new Http();
 // Init UI
 const ui = new UI();
+// Init Auth
+const auth = new Auth();
 // Api Key
 const apiKey = 'a44bc10446094baea789d794200786eb';
 
@@ -10,6 +12,20 @@ const selectCountry = document.getElementById('country');
 const selectCategory = document.getElementById('categories');
 const selectResources = document.getElementById('resources');
 const searchForm = document.getElementById('searchForm');
+const btnLogIn = document.getElementById('btn-login');
+const btnLogOut = document.getElementById('btn-logout');
+
+// Check auth state
+firebase.auth().onAuthStateChanged(function (user) {
+    if (user) {
+        btnLogOut.style.display = 'block';
+        btnLogIn.style.display = 'none';
+    }
+    else {
+        btnLogIn.style.display = 'block';
+        btnLogOut.style.display = 'none';
+    }
+});
 
 // Init resources
 (function () {
@@ -29,6 +45,7 @@ selectCountry.addEventListener('change', onChangeCountryOrCategory);
 selectCategory.addEventListener('change', onChangeCountryOrCategory);
 selectResources.addEventListener('change', onChangeResources);
 searchForm.addEventListener('submit', onSearch);
+btnLogOut.addEventListener('click', onLogOut);
 
 // Event handlers
 function onChangeCountryOrCategory(e) {
@@ -38,7 +55,6 @@ function onChangeCountryOrCategory(e) {
     ui.resetSelect('#resources');
     // Enable category select
     ui.disabledSelect(false, '#categories');
-
     // Make get request and handle results
     newsHandler(`https://newsapi.org/v2/top-headlines?country=${selectCountry.value}&category=${selectCategory.value}&apiKey=${apiKey}`);
 }
@@ -51,7 +67,6 @@ function onChangeResources(e) {
     ui.resetSelect('#categories');
     // Disable category select
     ui.disabledSelect(true, '#categories');
-
     // Make get request and handle results
     newsHandler(`https://newsapi.org/v2/top-headlines?sources=${selectResources.value}&apiKey=${apiKey}`);
 }
@@ -67,12 +82,10 @@ function onSearch(e) {
     ui.disabledSelect(true, '#categories');
     // Reset resources select
     ui.resetSelect('#resources');
-
     // Save search words for get request
     let searchWords = searchForm.elements.searchInput.value;
     // Clear input
     searchForm.reset();
-
     // Make get request and handle results
     newsHandler(`https://newsapi.org/v2/top-headlines?q=${searchWords}&apiKey=${apiKey}`);
 }
@@ -89,8 +102,15 @@ function newsHandler(url) {
                 // Add news to markup
                 data.articles.forEach(news => ui.addNews(news));
             } else {
-                ui.showInfo('По вашему запросу новостей не найдено.');
+                ui.showInfo('No news found on your request.');
             }
         })
         .catch((err) => ui.showError(err));
+}
+
+// LogOut
+function onLogOut() {
+    auth.logout()
+        .then(() => ui.showInfo('You have successfully logged out!'))
+        .catch(err => console.log(err));
 }
