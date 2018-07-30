@@ -4,8 +4,14 @@ const http = new Http();
 const ui = new UI();
 // Init Auth
 const auth = new Auth();
+// Init Favorites
+const favs = new Favorites();
+// Init news storage
+const newsStore = NewsStore.getInstance();
 // Api Key
 const apiKey = 'a44bc10446094baea789d794200786eb';
+// Login status
+let isLogined = false;
 
 // Init elements
 const selectCountry = document.getElementById('country');
@@ -14,21 +20,27 @@ const selectResources = document.getElementById('resources');
 const searchForm = document.getElementById('searchForm');
 const btnLogIn = document.getElementById('btn-login');
 const btnLogOut = document.getElementById('btn-logout');
+const btnFavorites = document.querySelector('.btn-favorites');
+const newsContainer = document.querySelector('.news-container');
 
 // Check auth state
 firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
+        isLogined = true;
         btnLogOut.style.display = 'block';
         btnLogIn.style.display = 'none';
+        btnFavorites.style.display = 'block';
     }
     else {
+        isLogined = false;
         btnLogIn.style.display = 'block';
         btnLogOut.style.display = 'none';
+        btnFavorites.style.display = 'none';
     }
 });
 
 // Init resources
-(function () {
+const resources = (function () {
     // Make get request for all resources
     http.get(`https://newsapi.org/v2/sources?apiKey=${apiKey}`)
         .then(data => {
@@ -46,6 +58,7 @@ selectCategory.addEventListener('change', onChangeCountryOrCategory);
 selectResources.addEventListener('change', onChangeResources);
 searchForm.addEventListener('submit', onSearch);
 btnLogOut.addEventListener('click', onLogOut);
+newsContainer.addEventListener('click', addFavorite);
 
 // Event handlers
 function onChangeCountryOrCategory(e) {
@@ -102,9 +115,15 @@ function newsHandler(url) {
                 // Clear container
                 ui.clearContainer();
                 // Add news to markup
-                data.articles.forEach(news => ui.addNews(news));
+                data.articles.forEach((news, index) => ui.addNews(news, index, isLogined));
+                // Add news to storage
+                newsStore.setNews(data.articles);
+                // Init tooltips
+                $('.tooltipped').tooltip();
             } else {
+                // Clear container
                 ui.clearContainer();
+                // Show info
                 ui.showInfo('No news found on your request.');
             }
         })
@@ -114,6 +133,18 @@ function newsHandler(url) {
 // LogOut
 function onLogOut() {
     auth.logout()
-        .then(() => ui.showInfo('You have successfully logged out!'))
+        .then(() => M.toast({ html: 'You have successfully logged out!' }))
         .catch(err => console.log(err));
+}
+
+// Add news to favorites
+function addFavorite(e) {
+    if (e.target.classList.contains('add-favorite')) {
+        const index = e.target.dataset.index;
+        const oneNews = newsStore.getNews()[index];
+
+        favs.addFavorite(oneNews)
+            .then(data => M.toast({ html: 'Added to favorites!' }))
+            .catch(err => ui.showError(err));
+    }
 }

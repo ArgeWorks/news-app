@@ -9,7 +9,7 @@ class UI {
         });
     }
 
-    addNews(news) {
+    addNews(news, index, isLogined) {
         const template = `
             <div class="col s12 m6">
                 <div class="card left-align">
@@ -18,7 +18,35 @@ class UI {
                     </div>
                     <div class="card-content">
                         <span class="card-title activator grey-text text-darken-4">${news.title}<i class="material-icons right">more_vert</i></span>
-                        <p><a href="${news.url}">Read more</a></p>
+                        <div class="card-buttons">
+                            <span><a href="${news.url}">Read more</a></span>
+                            ${isLogined ? `<i class="material-icons add-favorite tooltipped" data-index="${index}" data-position="right" data-tooltip="Add to favorites">star_border</i>` : ''}
+                        </div>
+                    </div>
+                    <div class="card-reveal">
+                        <span class="card-title grey-text text-darken-4">${news.title}<i class="material-icons right">close</i></span>
+                        <p>${news.description}</p>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        this.container.insertAdjacentHTML('beforeEnd', template);
+    }
+
+    addFavoriteNews(news, id) {
+        const template = `
+            <div class="col s12 m6">
+                <div class="card left-align">
+                    <div class="card-image waves-effect waves-block waves-light">
+                        <img class="activator" src="${news.urlToImage}">
+                    </div>
+                    <div class="card-content">
+                        <span class="card-title activator grey-text text-darken-4">${news.title}<i class="material-icons right">more_vert</i></span>
+                        <div class="card-buttons">
+                            <span><a href="${news.url}">Read more</a></span>
+                            <i class="material-icons remove-favorite tooltipped" data-id="${id}" data-position="right" data-tooltip="Remove from favorites">star</i>
+                        </div>
                     </div>
                     <div class="card-reveal">
                         <span class="card-title grey-text text-darken-4">${news.title}<i class="material-icons right">close</i></span>

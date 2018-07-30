@@ -18,6 +18,25 @@
     cursor: pointer;
 }
 
+.card .card-buttons {
+    display: flex;
+    align-items: center;
+}
+
+.card .card-buttons i {
+    margin-left: 10px;
+    color: #039be5;
+}
+
+.card .card-buttons i:hover {
+    cursor: pointer;
+    color: #047bb6;
+}
+
+.material-tooltip {
+    border-radius: 3px;
+}
+
 .header {
     top: 0;
     left: 0;
@@ -53,4 +72,8 @@
 
 .main {
     padding-top: 85px;
+}
+
+.main .news-title {
+    margin-bottom: 50px;
 }
