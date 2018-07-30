@@ -7,7 +7,7 @@ const auth = new Auth();
 // Init Favorites
 const favs = new Favorites();
 // Init news storage
-const newsStore = NewsStore.getInstance();
+const newsStore = Storage.getInstance();
 // Api Key
 const apiKey = 'a44bc10446094baea789d794200786eb';
 // Login status

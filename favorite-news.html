@@ -32,7 +32,7 @@
     <main class="main">
         <div class="news-container">
             <div class="container">
-                <h2 class="news-title">Favorite news</h2>
+                <h2 class="news-title">Favorite News</h2>
                 <div class="row center-align"></div>
             </div>
         </div>
@@ -45,13 +45,13 @@
     <script type="text/javascript" src="js/materialize.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase.js"></script>
 
-    <script src="js/firestore.js"></script>
-    <script src="js/auth.js"></script>
-    <script src="js/favorites.js"></script>
-
-    <script src="js/http.js"></script>
-    <script src="js/ui.js"></script>
-    <script src="js/news-store.js"></script>
+    <script src="js/modules/firestore.js"></script>
+    <script src="js/modules/auth.js"></script>
+    <script src="js/modules/favorites.js"></script>
+    <script src="js/modules/http.js"></script>
+    <script src="js/modules/ui.js"></script>
+    <script src="js/modules/storage.js"></script>
+    <script src="js/favorite-news.js"></script>
 
     <script>
         $(document).ready(function () {
@@ -61,8 +61,6 @@
             $('.tooltipped').tooltip();
         });
     </script>
-
-    <script src="js/favorite-news.js"></script>
 </body>
 
 </html>

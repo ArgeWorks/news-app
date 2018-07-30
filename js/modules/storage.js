@@ -1,4 +1,4 @@
-const NewsStore = (function () {
+const Storage = (function () {
     let news, instance;
 
     function getNews() {

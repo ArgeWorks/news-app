@@ -5,7 +5,7 @@ const auth = new Auth();
 // Init Favorites
 const favs = new Favorites();
 // Init news storage
-const newsStore = NewsStore.getInstance();
+const newsStore = Storage.getInstance();
 
 // Init elements
 const btnLogIn = document.getElementById('btn-login');
