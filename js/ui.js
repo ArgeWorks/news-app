@@ -1,6 +1,12 @@
 class UI {
     constructor() {
-        this.container = document.querySelector('.news-container .container .row') || document.querySelector('.login-container .container .row') || document.querySelector('.register-container .container .row');
+        this.container = document.querySelector('.news-container .container .row');
+        this.bannersContainer = document.querySelector('.banners-container');
+        this.bannersContainer.addEventListener('click', (e) => {
+            if (e.target.classList.contains('icon-close')) {
+                this.bannersContainer.innerHTML = '';
+            }
+        });
     }
 
     addNews(news) {
@@ -71,31 +77,33 @@ class UI {
     }
 
     showInfo(msg) {
-        this.clearContainer();
+        //this.clearContainer();
 
         const template = `
-            <div class="card blue lighten-4">
+            <div class="card blue lighten-4 banner-info">
                 <div class="card-content">
                     <p>${msg}</p>
                 </div>
+                <i class="material-icons icon-close">close</i>
             </div>
         `;
 
-        this.container.insertAdjacentHTML("beforeend", template);
+        this.bannersContainer.insertAdjacentHTML("beforeend", template);
     }
 
     showError(err) {
-        this.clearContainer();
+        //this.clearContainer();
 
         const template = `
-            <div class="card red lighten-1">
+            <div class="card red lighten-1 banner-info">
                 <div class="card-content">
                     <span class="card-title">Error:</span>
                     <p>${err}</p>
                 </div>
+                <i class="material-icons icon-close">close</i>
             </div>
         `;
 
-        this.container.insertAdjacentHTML("beforeend", template);
+        this.bannersContainer.insertAdjacentHTML("beforeend", template);
     }
 }

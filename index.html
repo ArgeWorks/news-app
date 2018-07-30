@@ -16,58 +16,68 @@
 <body>
     <div class="header">
         <div class="container">
-            <div class="header-wrapper">
-                <a href="login.html" class="btn waves-effect waves-light blue" id="btn-login" style="display: none">Login</a>
-                <button class="btn waves-effect waves-light blue" id="btn-logout" style="display: none">Logout</button>
+            <div class="header-container">
+                <div class="header-nav"></div>
+                <ul class="header-nav">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="#">Favorites</a></li>
+                </ul>
+                <div class="profile-control">
+                    <a href="login.html" class="btn waves-effect waves-light blue" id="btn-login" style="display: none">Login</a>
+                    <button class="btn waves-effect waves-light blue" id="btn-logout" style="display: none">Logout</button>
+                </div>
             </div>
         </div>
     </div>
-    <div class="news-control">
-        <div class="container">
-            <div class="row">
-                <form action="" id="searchForm">
-                    <div class="input-field col s11">
-                        <input id="searchInput" type="text">
-                        <label for="search">Search news</label>
+    <main class="main">
+        <div class="news-control">
+            <div class="container">
+                <div class="row">
+                    <form action="" id="searchForm">
+                        <div class="input-field col s11">
+                            <input id="searchInput" type="text">
+                            <label for="search">Search news</label>
+                        </div>
+                        <div class="input-field col s1">
+                            <button class="waves-effect waves-light btn" id="searchBtn">Search</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="row">
+                    <div class="input-field col s4">
+                        <select id="country">
+                            <option value="none" disabled selected>Choose country...</option>
+                            <option value="ua">Ukraine</option>
+                            <option value="ru">Russia</option>
+                            <option value="us">USA</option>
+                        </select>
                     </div>
-                    <div class="input-field col s1">
-                        <button class="waves-effect waves-light btn" id="searchBtn">Search</button>
+                    <div class="input-field col s4">
+                        <select id="categories" disabled>
+                            <option value="general" selected>General</option>
+                            <option value="business">Business</option>
+                            <option value="entertainment">Entertainment</option>
+                            <option value="health">Health</option>
+                            <option value="science">Science</option>
+                            <option value="sports">Sports</option>
+                            <option value="technology">Technology</option>
+                        </select>
                     </div>
-                </form>
-            </div>
-            <div class="row">
-                <div class="input-field col s4">
-                    <select id="country">
-                        <option value="none" disabled selected>Choose country...</option>
-                        <option value="ua">Ukraine</option>
-                        <option value="ru">Russia</option>
-                        <option value="us">USA</option>
-                    </select>
-                </div>
-                <div class="input-field col s4">
-                    <select id="categories" disabled>
-                        <option value="general" selected>General</option>
-                        <option value="business">Business</option>
-                        <option value="entertainment">Entertainment</option>
-                        <option value="health">Health</option>
-                        <option value="science">Science</option>
-                        <option value="sports">Sports</option>
-                        <option value="technology">Technology</option>
-                    </select>
-                </div>
-                <div class="input-field col s4">
-                    <select id="resources">
-                        <option value="" disabled selected>Choose resource...</option>
-                    </select>
+                    <div class="input-field col s4">
+                        <select id="resources">
+                            <option value="" disabled selected>Choose resource...</option>
+                        </select>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="news-container">
-        <div class="container">
-            <div class="row center-align"></div>
+        <div class="news-container">
+            <div class="container">
+                <div class="row center-align"></div>
+            </div>
         </div>
-    </div>
+    </main>
+    <div class="banners-container"></div>
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
         crossorigin="anonymous"></script>
