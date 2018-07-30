@@ -75,6 +75,8 @@ function onChangeResources(e) {
 function onSearch(e) {
     // Stop default action
     e.preventDefault();
+    // Show preloader
+    ui.showLoader();
     // Reset country and categories selects
     ui.resetSelect('#country');
     ui.resetSelect('#categories');
@@ -102,6 +104,7 @@ function newsHandler(url) {
                 // Add news to markup
                 data.articles.forEach(news => ui.addNews(news));
             } else {
+                ui.clearContainer();
                 ui.showInfo('No news found on your request.');
             }
         })

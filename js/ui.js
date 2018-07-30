@@ -28,7 +28,7 @@ class UI {
             </div>
         `;
 
-        this.container.insertAdjacentHTML('beforeend', template);
+        this.container.insertAdjacentHTML('beforeEnd', template);
     }
 
     addOptionToSelect(select, option) {
@@ -73,12 +73,10 @@ class UI {
             </div>
         `;
 
-        this.container.insertAdjacentHTML("beforeend", template);
+        this.container.insertAdjacentHTML("beforeEnd", template);
     }
 
     showInfo(msg) {
-        //this.clearContainer();
-
         const template = `
             <div class="card blue lighten-4 banner-info">
                 <div class="card-content">
@@ -88,12 +86,10 @@ class UI {
             </div>
         `;
 
-        this.bannersContainer.insertAdjacentHTML("beforeend", template);
+        this.bannersContainer.insertAdjacentHTML("beforeEnd", template);
     }
 
     showError(err) {
-        //this.clearContainer();
-
         const template = `
             <div class="card red lighten-1 banner-info">
                 <div class="card-content">
@@ -104,6 +100,6 @@ class UI {
             </div>
         `;
 
-        this.bannersContainer.insertAdjacentHTML("beforeend", template);
+        this.bannersContainer.insertAdjacentHTML("beforeEnd", template);
     }
 }
